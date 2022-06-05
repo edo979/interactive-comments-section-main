@@ -10,8 +10,11 @@
       sizes="32x32"
       href="./images/favicon-32x32.png"
     />
+    <script
+      defer
+      src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
 
-    <title>Frontend Mentor | Interactive comments section</title>
     <style>
       .attribution {
         font-size: 11px;
@@ -21,9 +24,31 @@
         color: hsl(228, 45%, 44%);
       }
     </style>
+
     <link rel="stylesheet" href="css/style.css" />
+
+    <title>Frontend Mentor | Interactive comments section</title>
   </head>
   <body>
+    <div
+      x-data="$store.commentsAppData"
+      x-init="$store.commentsAppData = await getData()"
+    >
+      <template x-for="comment in $store.commentsAppData.comments">
+        <ul>
+          <li>
+            <p x-text="comment.content"></p>
+
+            <template x-for="reply in comment.replies">
+              <ul>
+                <li x-text="reply.content"></li>
+              </ul>
+            </template>
+          </li>
+        </ul>
+      </template>
+    </div>
+
     <div class="attribution">
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
