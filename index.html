@@ -33,20 +33,24 @@
     <div
       x-data="$store.commentsAppData"
       x-init="$store.commentsAppData = await getData()"
+      class="comments"
     >
-      <template x-for="comment in $store.commentsAppData.comments">
-        <ul>
-          <li>
+      <ul class="comments_container">
+        <template x-for="comment in $store.commentsAppData.comments">
+          <li class="comments_comment">
             <p x-text="comment.content"></p>
 
-            <template x-for="reply in comment.replies">
-              <ul>
-                <li x-text="reply.content"></li>
-              </ul>
-            </template>
+            <ul
+              x-show="comment.replies.length != 0"
+              class="comments_replies-container"
+            >
+              <template x-for="reply in comment.replies">
+                <li x-text="reply.content" class="comments_comment"></li>
+              </template>
+            </ul>
           </li>
-        </ul>
-      </template>
+        </template>
+      </ul>
     </div>
 
     <div class="attribution">

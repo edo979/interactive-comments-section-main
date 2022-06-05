@@ -1,0 +1,21 @@
+.comments {
+  width: max(325px, 86vw);
+  padding: max(20px, 2vw);
+  margin-inline: auto;
+
+  &_container,
+  &_replies-container {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+  }
+
+  &_replies-container {
+    padding-left: 25px;
+  }
+
+  &_comment {
+    margin-bottom: 1rem;
+  }
+}
