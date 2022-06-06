@@ -56,14 +56,37 @@
 
             <button class="comment_reply-btn">Reply</button>
 
-            <ul
-              x-show="comment.replies.length != 0"
-              class="comments_replies-container"
-            >
-              <template x-for="reply in comment.replies">
-                <li x-text="reply.content" class="comments_comment"></li>
-              </template>
-            </ul>
+            <template x-if="comment.replies.length != 0">
+              <ul
+                class="comments_replies-container"
+                x-data="{replies: comment.replies}"
+              >
+                <template x-for="reply in replies">
+                  <li x-data="{...reply}" class="comment grid-container">
+                    <div class="flex comment_header">
+                      <picture>
+                        <source
+                          :srcset="user.image.webp"
+                          media="(min-width: 400px)"
+                        />
+                        <img :src="user.image.png" alt="" />
+                      </picture>
+                      <span x-text="createdAt"></span>
+                    </div>
+
+                    <p x-text="content" class="comment_content"></p>
+
+                    <div class="flex comment_score">
+                      <button>+</button>
+                      <span x-text="score" class="comment_score"></span>
+                      <button>-</button>
+                    </div>
+
+                    <button class="comment_reply-btn">Reply</button>
+                  </li>
+                </template>
+              </ul>
+            </template>
           </li>
         </template>
       </ul>
