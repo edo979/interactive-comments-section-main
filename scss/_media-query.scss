@@ -1,0 +1,23 @@
+@media (min-width: 568px) {
+  .comments {
+    width: min(800px, 90vw);
+  }
+
+  .grid-container {
+    grid-template-areas:
+      'score header reply'
+      'score content content';
+
+    column-gap: 1rem;
+  }
+
+  .comment {
+    &_score {
+      --direction: column;
+    }
+
+    &_reply-btn {
+      justify-self: end;
+    }
+  }
+}
