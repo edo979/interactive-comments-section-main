@@ -47,7 +47,8 @@
                   />
                   <img :src="user.image.png" alt="" />
                 </picture>
-                <span x-text="createdAt"></span>
+                <p class="comment_username" x-text="user.username"></p>
+                <span x-text="createdAt" class="comment_time-stamp"></span>
               </div>
 
               <p x-text="content" class="comment_content"></p>
@@ -63,7 +64,7 @@
 
             <template x-if="comment.replies.length != 0">
               <ul
-                class="comments_replies-container"
+                class="comment_replies-container"
                 x-data="{replies: comment.replies}"
               >
                 <template x-for="reply in replies">
@@ -76,7 +77,11 @@
                         />
                         <img :src="user.image.png" alt="" />
                       </picture>
-                      <span x-text="createdAt"></span>
+                      <p class="comment_username" x-text="user.username"></p>
+                      <span
+                        x-text="createdAt"
+                        class="comment_time-stamp"
+                      ></span>
                     </div>
 
                     <p x-text="content" class="comment_content"></p>
