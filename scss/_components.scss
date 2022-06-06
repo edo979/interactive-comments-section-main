@@ -1,24 +1,7 @@
-.comment_replies-container,
-.comments_container {
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
-.comments {
-  width: max(325px, 86vw);
-  padding: max(20px, 2vw);
-  margin-inline: auto;
+.main-container {
+  background-color: $Very-light-gray;
 }
 
 .comment {
-  margin-bottom: 1rem;
-  &_reply-btn {
-    align-self: center;
-  }
-
-  &_replies-container {
-    padding-left: 25px;
-  }
+  background-color: $White;
 }

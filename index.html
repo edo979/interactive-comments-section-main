@@ -17,6 +17,11 @@
 
     <style>
       .attribution {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -2rem;
+
         font-size: 11px;
         text-align: center;
       }
@@ -30,83 +35,86 @@
     <title>Frontend Mentor | Interactive comments section</title>
   </head>
   <body>
-    <div
-      x-data="$store.commentsAppData"
-      x-init="$store.commentsAppData = await getData()"
-      class="comments"
-    >
-      <ul class="comments_container">
-        <template x-for="comment in $store.commentsAppData.comments">
-          <li>
-            <div x-data="{...comment}" class="comment grid-container">
-              <div class="flex comment_header">
-                <picture>
-                  <source
-                    :srcset="user.image.webp"
-                    media="(min-width: 400px)"
-                  />
-                  <img :src="user.image.png" alt="" />
-                </picture>
-                <p class="comment_username" x-text="user.username"></p>
-                <span x-text="createdAt" class="comment_time-stamp"></span>
+    <div class="main-container">
+      <div
+        x-data="$store.commentsAppData"
+        x-init="$store.commentsAppData = await getData()"
+        class="comments"
+      >
+        <ul class="comments_container">
+          <template x-for="comment in $store.commentsAppData.comments">
+            <li>
+              <div x-data="{...comment}" class="comment grid-container">
+                <div class="flex comment_header">
+                  <picture>
+                    <source
+                      :srcset="user.image.webp"
+                      media="(min-width: 400px)"
+                    />
+                    <img :src="user.image.png" alt="" />
+                  </picture>
+                  <p class="comment_username" x-text="user.username"></p>
+                  <span x-text="createdAt" class="comment_time-stamp"></span>
+                </div>
+
+                <p x-text="content" class="comment_content"></p>
+
+                <div class="flex comment_score">
+                  <button>+</button>
+                  <span x-text="score" class="comment_score"></span>
+                  <button>-</button>
+                </div>
+
+                <button class="comment_reply-btn">Reply</button>
               </div>
 
-              <p x-text="content" class="comment_content"></p>
+              <template x-if="comment.replies.length != 0">
+                <ul
+                  class="comment_replies-container"
+                  x-data="{replies: comment.replies}"
+                >
+                  <template x-for="reply in replies">
+                    <li x-data="{...reply}" class="comment grid-container">
+                      <div class="flex comment_header">
+                        <picture>
+                          <source
+                            :srcset="user.image.webp"
+                            media="(min-width: 400px)"
+                          />
+                          <img :src="user.image.png" alt="" />
+                        </picture>
+                        <p class="comment_username" x-text="user.username"></p>
+                        <span
+                          x-text="createdAt"
+                          class="comment_time-stamp"
+                        ></span>
+                      </div>
 
-              <div class="flex comment_score">
-                <button>+</button>
-                <span x-text="score" class="comment_score"></span>
-                <button>-</button>
-              </div>
+                      <p x-text="content" class="comment_content"></p>
 
-              <button class="comment_reply-btn">Reply</button>
-            </div>
+                      <div class="flex comment_score">
+                        <button>+</button>
+                        <span x-text="score" class="comment_score"></span>
+                        <button>-</button>
+                      </div>
 
-            <template x-if="comment.replies.length != 0">
-              <ul
-                class="comment_replies-container"
-                x-data="{replies: comment.replies}"
-              >
-                <template x-for="reply in replies">
-                  <li x-data="{...reply}" class="comment grid-container">
-                    <div class="flex comment_header">
-                      <picture>
-                        <source
-                          :srcset="user.image.webp"
-                          media="(min-width: 400px)"
-                        />
-                        <img :src="user.image.png" alt="" />
-                      </picture>
-                      <p class="comment_username" x-text="user.username"></p>
-                      <span
-                        x-text="createdAt"
-                        class="comment_time-stamp"
-                      ></span>
-                    </div>
+                      <button class="comment_reply-btn">Reply</button>
+                    </li>
+                  </template>
+                </ul>
+              </template>
+            </li>
+          </template>
+        </ul>
 
-                    <p x-text="content" class="comment_content"></p>
-
-                    <div class="flex comment_score">
-                      <button>+</button>
-                      <span x-text="score" class="comment_score"></span>
-                      <button>-</button>
-                    </div>
-
-                    <button class="comment_reply-btn">Reply</button>
-                  </li>
-                </template>
-              </ul>
-            </template>
-          </li>
-        </template>
-      </ul>
-    </div>
-
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by <a href="#">Your Name Here</a>.
+        <div class="attribution">
+          Challenge by
+          <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+            >Frontend Mentor</a
+          >. Coded by
+          <a href="https://www.frontendmentor.io/profile/edo979">edo979</a>.
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
