@@ -16,7 +16,7 @@
 
 .comments {
   position: relative;
-  width: max(325px, 86vw);
+  width: max(325px, 87.5vw);
 }
 
 .comment_replies-container,
@@ -29,6 +29,7 @@
 
 .grid-container {
   display: grid;
+  grid-template-columns: auto auto min-content;
   grid-template-areas:
     'header header header'
     'content content content'
@@ -37,7 +38,7 @@
 
 .comment {
   margin-bottom: 1rem;
-  padding: max(20px, 2vw);
+  padding: min(1.5rem, 4.3vw);
 
   &_header {
     grid-area: header;
