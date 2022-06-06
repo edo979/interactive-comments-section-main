@@ -37,8 +37,24 @@
     >
       <ul class="comments_container">
         <template x-for="comment in $store.commentsAppData.comments">
-          <li class="comments_comment">
-            <p x-text="comment.content"></p>
+          <li x-data="{...comment}" class="comment grid-container">
+            <div class="flex comment_header">
+              <picture>
+                <source :srcset="user.image.webp" media="(min-width: 400px)" />
+                <img :src="user.image.png" alt="" />
+              </picture>
+              <span x-text="createdAt"></span>
+            </div>
+
+            <p x-text="content" class="comment_content"></p>
+
+            <div class="flex comment_score">
+              <button>+</button>
+              <span x-text="score" class="comment_score"></span>
+              <button>-</button>
+            </div>
+
+            <button class="comment_reply-btn">Reply</button>
 
             <ul
               x-show="comment.replies.length != 0"

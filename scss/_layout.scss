@@ -1,0 +1,25 @@
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'header header header'
+    'content content content'
+    'score score reply';
+}
+
+.comment {
+  &_header {
+    grid-area: header;
+  }
+
+  &_content {
+    grid-area: content;
+  }
+
+  &_score {
+    grid-area: score;
+  }
+
+  &_reply-btn {
+    grid-area: reply;
+  }
+}
