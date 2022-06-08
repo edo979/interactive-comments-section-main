@@ -67,22 +67,37 @@
 
                 <button
                   @click="isReplyClick = ! isReplyClick"
-                  class="comment_reply-btn"
+                  class="comment_reply-btn btn btn-secondary"
                 >
                   Reply
                 </button>
               </div>
 
               <template x-if="isReplyClick">
-                <div class="comment_reply">
-                  <textarea name="comment_reply" id="1" rows="3"></textarea>
+                <div
+                  class="comment_reply flex"
+                  x-data="{...$store.commentsAppData.currentUser}"
+                >
+                  <picture>
+                    <source :srcset="image.webp" media="(min-width: 400px)" />
+                    <img :src="image.png" alt="" />
+                  </picture>
+
+                  <textarea
+                    name="comment_reply"
+                    id="1"
+                    rows="3"
+                    x-model="user.username.replace(/^/, '@')"
+                  ></textarea>
+
+                  <button class="btn btn-primary">Reply</button>
                 </div>
               </template>
 
               <template x-if="replies.length != 0">
                 <ul class="comment_replies-container">
-                  <template x-for="comment_reply in replies">
-                    <li x-data="{isReplyClick: false, ...comment_reply}">
+                  <template x-for="comment in replies">
+                    <li x-data="{isReplyClick: false, ...comment}">
                       <div class="comment grid-container">
                         <div class="flex comment_header">
                           <picture>
