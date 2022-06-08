@@ -6,5 +6,18 @@
   background-color: $White;
 
   &_reply {
+    --align: start;
+    padding: $padding;
+    margin: 0.5rem 0 1rem;
+
+    background-color: $White;
+
+    img {
+      width: 50px;
+    }
+
+    textarea {
+      width: 100%;
+    }
   }
 }

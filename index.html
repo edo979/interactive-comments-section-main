@@ -41,7 +41,7 @@
         x-init="$store.commentsAppData = await getData()"
         class="comments"
       >
-        <ul class="comments_container">
+        <ul class="comments_container flow--list">
           <template x-for="comment in $store.commentsAppData.comments">
             <li x-data="{ isReplyClick: false, ...comment}">
               <div class="comment grid-container">
@@ -95,7 +95,7 @@
               </template>
 
               <template x-if="replies.length != 0">
-                <ul class="comment_replies-container">
+                <ul class="comment_replies-container flow">
                   <template x-for="comment in replies">
                     <li x-data="{isReplyClick: false, ...comment}">
                       <div class="comment grid-container">
