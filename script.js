@@ -1,11 +1,11 @@
 document.addEventListener('alpine:init', () => {
-  Alpine.store('commentsApp', {
+  Alpine.data('commentsApp', () => ({
     data: {},
 
-    saveReply(e) {
-      console.log('save Reply')
+    saveReply({ id, replyMessage }) {
+      console.log(id, replyMessage)
     },
-  })
+  }))
 })
 
 async function getData() {
