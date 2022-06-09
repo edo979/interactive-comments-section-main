@@ -78,6 +78,7 @@
                   class="comment_reply flex"
                   x-data="{ 
                     replyMessage: user.username.replace(/^/, '@'),
+                    replyingTo: user.username,
                     ...data.currentUser}"
                 >
                   <picture>

@@ -1,9 +1,28 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('commentsApp', () => ({
     data: {},
+    lastId: 4,
 
-    saveReply({ id, replyMessage }) {
-      console.log(id, replyMessage)
+    saveReply({ id, replyMessage, replyingTo }) {
+      const comment = this.data.comments
+        .filter((comment) => comment.id == id)
+        .pop()
+
+      comment.replies.unshift({
+        id: this.getId,
+        content: replyMessage,
+        createdAt: new Date(),
+        score: 0,
+        replyingTo,
+        user: { ...this.data.currentUser },
+      })
+
+      console.log(comment)
+    },
+
+    get getId() {
+      this.lastId++
+      return this.lastId
     },
   }))
 })
