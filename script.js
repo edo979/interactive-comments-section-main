@@ -12,13 +12,11 @@ document.addEventListener('alpine:init', () => {
       replyingToComment.replies.unshift({
         id: this.getId,
         content: replyMessage,
-        createdAt: new Date(),
+        createdAt: new Date().toString(),
         score: 0,
         replyingTo,
         user: { ...this.data.currentUser },
       })
-
-      console.log(this.data.comments)
 
       // new comments array
       this.data.comments = this.data.comments.map((comment) => {
@@ -28,6 +26,8 @@ document.addEventListener('alpine:init', () => {
 
         return comment
       })
+
+      saveToLs(this.data)
     },
 
     get getId() {
@@ -38,6 +38,7 @@ document.addEventListener('alpine:init', () => {
 })
 
 async function getData() {
+  //localStorage.clear()
   // Get data from Local storage
   const dataFromLS = JSON.parse(localStorage.getItem('commentsAppData'))
 
@@ -52,14 +53,15 @@ async function getData() {
   return dataFromLS
 }
 
-function timeSince(date) {
-  if (typeof date === 'string') {
-    return date
+function timeSince(dateStamp) {
+  if (dateStamp.includes('ago')) {
+    return dateStamp.slice(0, -4)
   }
 
-  var seconds = Math.floor((new Date() - date) / 1000)
+  const date = new Date(dateStamp)
 
-  var interval = seconds / 31536000
+  let seconds = Math.floor((new Date() - date) / 1000),
+    interval = seconds / 31536000
 
   if (interval > 1) {
     return Math.floor(interval) + ' years'
@@ -81,4 +83,9 @@ function timeSince(date) {
     return Math.floor(interval) + ' minutes'
   }
   return Math.floor(seconds) + ' seconds'
+}
+
+function saveToLs(data) {
+  localStorage.setItem('commentsAppData', JSON.stringify(data))
+  console.log(JSON.parse(localStorage.getItem('commentsAppData')))
 }
