@@ -43,12 +43,7 @@
       >
         <ul class="comments_container flow--list">
           <template x-for="comment in data.comments" :key="comment.id">
-            <li
-              x-data="{ 
-                isReplyClick: false,
-                toggleReply() {this.isReplyClick = ! this.isReplyClick},
-                ...comment}"
-            >
+            <li x-data="{isReplyClick: false, ...comment}">
               <div class="comment grid-container">
                 <div class="flex comment_header">
                   <picture>
@@ -101,7 +96,7 @@
                   ></textarea>
 
                   <button
-                    @click="(e) => {saveReply($data); toggleReply()}"
+                    @click="(e) => {saveReply($data); isReplyClick = false}"
                     class="btn btn-primary"
                   >
                     Reply
@@ -119,7 +114,6 @@
                     <li
                       x-data="{ 
                       isReplyClick: false,
-                      toggleReply() {this.isReplyClick = ! this.isReplyClick},
                       ...comment}"
                     >
                       <div class="comment grid-container">
@@ -183,7 +177,7 @@
                           ></textarea>
 
                           <button
-                            @click="(e) => {saveReplyToReply($data); toggleReply()}"
+                            @click="(e) => {saveReplyToReply($data); isReplyClick = false}"
                             class="btn btn-primary"
                           >
                             Reply
