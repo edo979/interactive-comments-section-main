@@ -17,8 +17,9 @@ document.addEventListener('alpine:init', () => {
         user: { ...this.data.currentUser },
       })
 
-      this.saveToData(replyingToComment, id)
+      this.saveData(replyingToComment, id)
     },
+
     saveReplyToReply({ id, replyMessage, replyingTo, parrentCommentId }) {
       // get parrent comment, create reply object, get index of replying reply
       const replyingToComment = this.data.comments
@@ -39,10 +40,10 @@ document.addEventListener('alpine:init', () => {
       // post reply after reply
       replyingToComment.replies.splice(indexOfParrentReply + 1, 0, newReply)
 
-      this.saveToData(replyingToComment, id)
+      this.saveData(replyingToComment, id)
     },
 
-    saveToData(replyingToComment, id) {
+    saveData(replyingToComment, id) {
       this.data.comments = this.data.comments.map((comment) => {
         if (comment.id == id) {
           return replyingToComment
@@ -51,7 +52,12 @@ document.addEventListener('alpine:init', () => {
         return comment
       })
 
-      saveToLs(this.data)
+      this.saveToLs(this.data)
+    },
+
+    saveToLs(data) {
+      localStorage.setItem('commentsAppData', JSON.stringify(data))
+      //console.log(JSON.parse(localStorage.getItem('commentsAppData')))
     },
 
     get getId() {
@@ -62,7 +68,7 @@ document.addEventListener('alpine:init', () => {
 })
 
 async function getData() {
-  //localStorage.clear()
+  // localStorage.clear()
   // Get data from Local storage
   const dataFromLs = JSON.parse(localStorage.getItem('commentsAppData'))
 
@@ -107,9 +113,4 @@ function timeSince(dateStamp) {
     return Math.floor(interval) + ' minutes'
   }
   return Math.floor(seconds) + ' seconds'
-}
-
-function saveToLs(data) {
-  localStorage.setItem('commentsAppData', JSON.stringify(data))
-  console.log(JSON.parse(localStorage.getItem('commentsAppData')))
 }
