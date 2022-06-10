@@ -45,7 +45,8 @@
   grid-template-areas:
     'header header header'
     'content content content'
-    'score score reply';
+    'score score reply'
+    'update update update';
 }
 
 .comment {
@@ -70,5 +71,10 @@
 
   &_replies-container {
     padding-left: 25px;
+  }
+
+  &_update-btn {
+    grid-area: update;
+    justify-self: end;
   }
 }

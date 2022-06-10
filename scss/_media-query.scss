@@ -6,7 +6,8 @@
   .grid-container {
     grid-template-areas:
       'score header reply'
-      'score content content';
+      'score content content'
+      'update update update';
 
     column-gap: 1rem;
   }

@@ -43,7 +43,10 @@
       >
         <ul class="comments_container flow--list">
           <template x-for="comment in data.comments" :key="comment.id">
-            <li x-data="{isReplyClick: false, ...comment}">
+            <li
+              x-data="{isReplyClick: false, isEdit: isCurrentUser($data),
+                ...comment}"
+            >
               <div
                 class="comment grid-container"
                 x-html="getCommentInnerHtml"
@@ -87,6 +90,7 @@
                     <li
                       x-data="{ 
                       isReplyClick: false,
+                      isEdit: isCurrentUser($data),
                       ...comment}"
                     >
                       <div
