@@ -10,7 +10,7 @@ document.addEventListener('alpine:init', () => {
 
       replyingToComment.replies.unshift({
         id: this.getId,
-        content: replyMessage,
+        content: replyMessage.replace(`@${replyingTo} `, ''),
         createdAt: new Date().toString(),
         score: 0,
         replyingTo,
@@ -27,7 +27,7 @@ document.addEventListener('alpine:init', () => {
           .pop(),
         newReply = {
           id: this.getId,
-          content: replyMessage,
+          content: replyMessage.replace(`@${replyingTo} `, ''),
           createdAt: new Date().toString(),
           score: 0,
           replyingTo,

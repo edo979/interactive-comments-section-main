@@ -141,7 +141,10 @@
                           ></span>
                         </div>
 
-                        <p x-text="content" class="comment_content"></p>
+                        <p class="comment_content">
+                          <span x-text="'@' + replyingTo + ' '"></span>
+                          <span x-text="content"></span>
+                        </p>
 
                         <div class="flex comment_score">
                           <button>+</button>
