@@ -44,37 +44,10 @@
         <ul class="comments_container flow--list">
           <template x-for="comment in data.comments" :key="comment.id">
             <li x-data="{isReplyClick: false, ...comment}">
-              <div class="comment grid-container">
-                <div class="flex comment_header">
-                  <picture>
-                    <source
-                      :srcset="user.image.webp"
-                      media="(min-width: 400px)"
-                    />
-                    <img :src="user.image.png" alt="" />
-                  </picture>
-                  <p class="comment_username" x-text="user.username"></p>
-                  <span
-                    x-text="timeSince(createdAt) + ' ago'"
-                    class="comment_time-stamp"
-                  ></span>
-                </div>
-
-                <p x-text="content" class="comment_content"></p>
-
-                <div class="flex comment_score">
-                  <button>+</button>
-                  <span x-text="score" class="comment_score"></span>
-                  <button>-</button>
-                </div>
-
-                <button
-                  @click="isReplyClick = ! isReplyClick"
-                  class="comment_reply-btn btn btn-secondary"
-                >
-                  Reply
-                </button>
-              </div>
+              <div
+                class="comment grid-container"
+                x-html="getCommentInnerHtml"
+              ></div>
 
               <template x-if="isReplyClick">
                 <div
@@ -116,43 +89,10 @@
                       isReplyClick: false,
                       ...comment}"
                     >
-                      <div class="comment grid-container">
-                        <div class="flex comment_header">
-                          <picture>
-                            <source
-                              :srcset="user.image.webp"
-                              media="(min-width: 400px)"
-                            />
-                            <img :src="user.image.png" alt="" />
-                          </picture>
-                          <p
-                            class="comment_username"
-                            x-text="user.username"
-                          ></p>
-                          <span
-                            x-text="timeSince(createdAt) + ' ago'"
-                            class="comment_time-stamp"
-                          ></span>
-                        </div>
-
-                        <p class="comment_content">
-                          <span x-text="'@' + replyingTo + ' '"></span>
-                          <span x-text="content"></span>
-                        </p>
-
-                        <div class="flex comment_score">
-                          <button>+</button>
-                          <span x-text="score" class="comment_score"></span>
-                          <button>-</button>
-                        </div>
-
-                        <button
-                          @click="isReplyClick = ! isReplyClick"
-                          class="comment_reply-btn btn btn-secondary"
-                        >
-                          Reply
-                        </button>
-                      </div>
+                      <div
+                        class="comment grid-container"
+                        x-html="getCommentInnerHtml(isReply = true)"
+                      ></div>
 
                       <template x-if="isReplyClick">
                         <div

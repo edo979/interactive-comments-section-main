@@ -64,6 +64,53 @@ document.addEventListener('alpine:init', () => {
       this.data.lastId++
       return this.data.lastId
     },
+
+    getCommentInnerHtml(isReply = false) {
+      let contentText = ''
+
+      if (isReply) {
+        contentText = `
+          <p class="comment_content">
+            <span x-text="'@' + replyingTo + ' '"></span>
+            <span x-text="content"></span>
+          </p>
+        `
+      } else {
+        contentText = `<p x-text="content" class="comment_content"></p>`
+      }
+
+      return `
+          <div class="flex comment_header">
+            <picture>
+              <source
+                :srcset="user.image.webp"
+                media="(min-width: 400px)"
+              />
+              <img :src="user.image.png" alt="" />
+            </picture>
+            <p class="comment_username" x-text="user.username"></p>
+            <span
+              x-text="timeSince(createdAt) + ' ago'"
+              class="comment_time-stamp"
+            ></span>
+          </div>
+          
+          ${contentText}
+
+          <div class="flex comment_score">
+            <button>+</button>
+            <span x-text="score" class="comment_score"></span>
+            <button>-</button>
+          </div>
+
+          <button
+            @click="isReplyClick = ! isReplyClick"
+            class="comment_reply-btn btn btn-secondary"
+          >
+            Reply
+          </button>
+      `
+    },
   }))
 })
 
