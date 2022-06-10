@@ -88,7 +88,15 @@ document.addEventListener('alpine:init', () => {
               />
               <img :src="user.image.png" alt="" />
             </picture>
-            <p class="comment_username" x-text="user.username"></p>
+            <p class="comment_username">
+              <span x-text="user.username"></span>
+              <span       
+                x-show="isCurrentUser($data)" 
+                class="comment_current-user">
+                You
+              </span>
+              
+            </p>
             <span
               x-text="timeSince(createdAt) + ' ago'"
               class="comment_time-stamp"
@@ -103,13 +111,41 @@ document.addEventListener('alpine:init', () => {
             <button>-</button>
           </div>
 
-          <button
-            @click="isReplyClick = ! isReplyClick"
-            class="comment_reply-btn btn btn-secondary"
-          >
-            Reply
-          </button>
+          <div x-data="{isEdit: isCurrentUser($data)}" class="comment_ctrl-btns">
+            <template x-if="isEdit">
+              <div class="comment_edit flex">
+                <button>delete</button>
+                <button>edit</button>
+              </div>
+            </template>
+
+            <template x-if="!isEdit">
+              <button
+                @click="isReplyClick = ! isReplyClick"
+                class="btn btn-secondary"
+              >
+                Reply
+              </button>
+            </template> 
+          </div>
+
+          <template x-if="true">
+            <button
+            
+              class="btn btn-primary"
+            >
+              Update
+            </button>
+          </template>  
       `
+    },
+
+    isCurrentUser({ user: { username }, data: { currentUser } }) {
+      if (username === currentUser.username) {
+        return true
+      } else {
+        return false
+      }
     },
   }))
 })
