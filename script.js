@@ -88,6 +88,7 @@ document.addEventListener('alpine:init', () => {
               />
               <img :src="user.image.png" alt="" />
             </picture>
+
             <p class="comment_username">
               <span x-text="user.username"></span>
               <span       
@@ -95,8 +96,8 @@ document.addEventListener('alpine:init', () => {
                 class="comment_current-user">
                 You
               </span>
-              
             </p>
+
             <span
               x-text="timeSince(createdAt) + ' ago'"
               class="comment_time-stamp"
@@ -130,9 +131,7 @@ document.addEventListener('alpine:init', () => {
           </div>
 
           <template x-if="isEdit">
-            <button
-            
-              class="comment_update-btn btn btn-primary"
+            <button class="comment_update-btn btn btn-primary"
             >
               Update
             </button>
