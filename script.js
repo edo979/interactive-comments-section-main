@@ -17,7 +17,32 @@ document.addEventListener('alpine:init', () => {
         user: { ...this.data.currentUser },
       })
 
-      // new comments array
+      this.saveToData(replyingToComment, id)
+    },
+    saveReplyToReply({ id, replyMessage, replyingTo, parrentCommentId }) {
+      // get parrent comment, create reply object, get index of replying reply
+      const replyingToComment = this.data.comments
+          .filter((comment) => comment.id == parrentCommentId)
+          .pop(),
+        newReply = {
+          id: this.getId,
+          content: replyMessage,
+          createdAt: new Date().toString(),
+          score: 0,
+          replyingTo,
+          user: { ...this.data.currentUser },
+        },
+        indexOfParrentReply = replyingToComment.replies.findIndex(
+          (el) => el.id == id
+        )
+
+      // post reply after reply
+      replyingToComment.replies.splice(indexOfParrentReply + 1, 0, newReply)
+
+      this.saveToData(replyingToComment, id)
+    },
+
+    saveToData(replyingToComment, id) {
       this.data.comments = this.data.comments.map((comment) => {
         if (comment.id == id) {
           return replyingToComment
