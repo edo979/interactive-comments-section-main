@@ -4,11 +4,12 @@ document.addEventListener('alpine:init', () => {
     lastId: 4,
 
     saveReply({ id, replyMessage, replyingTo }) {
-      const comment = this.data.comments
+      // Create reply object
+      const replyingToComment = this.data.comments
         .filter((comment) => comment.id == id)
         .pop()
 
-      comment.replies.unshift({
+      replyingToComment.replies.unshift({
         id: this.getId,
         content: replyMessage,
         createdAt: new Date(),
@@ -17,7 +18,16 @@ document.addEventListener('alpine:init', () => {
         user: { ...this.data.currentUser },
       })
 
-      console.log(comment)
+      console.log(this.data.comments)
+
+      // new comments array
+      this.data.comments = this.data.comments.map((comment) => {
+        if (comment.id == id) {
+          return replyingToComment
+        }
+
+        return comment
+      })
     },
 
     get getId() {

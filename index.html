@@ -43,7 +43,12 @@
       >
         <ul class="comments_container flow--list">
           <template x-for="comment in data.comments" :key="comment.id">
-            <li x-data="{ isReplyClick: false, ...comment}">
+            <li
+              x-data="{ 
+                isReplyClick: false,
+                toggleReply() {this.isReplyClick = ! this.isReplyClick},
+                ...comment}"
+            >
               <div class="comment grid-container">
                 <div class="flex comment_header">
                   <picture>
@@ -92,7 +97,10 @@
                     x-model="replyMessage"
                   ></textarea>
 
-                  <button @click="saveReply($data)" class="btn btn-primary">
+                  <button
+                    @click="(e) => {saveReply($data); toggleReply()}"
+                    class="btn btn-primary"
+                  >
                     Reply
                   </button>
                 </div>
@@ -100,7 +108,7 @@
 
               <template x-if="replies.length != 0">
                 <ul class="comment_replies-container flow">
-                  <template x-for="comment in replies">
+                  <template x-for="comment in replies" :key="comment.id">
                     <li x-data="{isReplyClick: false, ...comment}">
                       <div class="comment grid-container">
                         <div class="flex comment_header">
@@ -151,32 +159,6 @@
                 </ul>
               </template>
             </li>
-
-            <template x-teleport=".comment">
-              <div class="flex comment_header">
-                <picture>
-                  <source
-                    :srcset="user.image.webp"
-                    media="(min-width: 400px)"
-                  />
-                  <img :src="user.image.png" alt="" />
-                </picture>
-                <p class="comment_username" x-text="user.username"></p>
-                <span x-text="createdAt" class="comment_time-stamp"></span>
-              </div>
-
-              <p x-text="content" class="comment_content"></p>
-
-              <div class="flex comment_score">
-                <button>+</button>
-                <span x-text="score" class="comment_score"></span>
-                <button>-</button>
-              </div>
-
-              <button @click="reply = ! reply" class="comment_reply-btn">
-                Reply
-              </button>
-            </template>
           </template>
         </ul>
 
