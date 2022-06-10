@@ -1,7 +1,6 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('commentsApp', () => ({
     data: {},
-    lastId: 4,
 
     saveReply({ id, replyMessage, replyingTo }) {
       // Create reply object
@@ -31,8 +30,8 @@ document.addEventListener('alpine:init', () => {
     },
 
     get getId() {
-      this.lastId++
-      return this.lastId
+      this.data.lastId++
+      return this.data.lastId
     },
   }))
 })
@@ -40,17 +39,17 @@ document.addEventListener('alpine:init', () => {
 async function getData() {
   //localStorage.clear()
   // Get data from Local storage
-  const dataFromLS = JSON.parse(localStorage.getItem('commentsAppData'))
+  const dataFromLs = JSON.parse(localStorage.getItem('commentsAppData'))
 
   // Or load form file
-  if (!dataFromLS) {
+  if (!dataFromLs) {
     const res = await fetch('data.json'),
       dataFromFile = await res.json()
 
-    return dataFromFile
+    return { ...dataFromFile, lastId: 4 }
   }
 
-  return dataFromLS
+  return dataFromLs
 }
 
 function timeSince(dateStamp) {
