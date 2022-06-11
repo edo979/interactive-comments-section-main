@@ -2,6 +2,14 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('commentsApp', () => ({
     data: {},
 
+    set setData(data) {
+      this.data = data
+    },
+
+    set setComments(comments) {
+      this.data.comments = comments
+    },
+
     get getId() {
       this.data.lastId++
       return this.data.lastId
@@ -9,11 +17,11 @@ document.addEventListener('alpine:init', () => {
 
     saveReply({ id, replyMessage, replyingTo }) {
       // Create reply object
-      const replyingToComment = this.data.comments
+      const commentObj = this.data.comments
         .filter((comment) => comment.id == id)
         .pop()
 
-      replyingToComment.replies.unshift({
+      commentObj.replies.unshift({
         id: this.getId,
         content: replyMessage.replace(`@${replyingTo} `, ''),
         createdAt: new Date().toString(),
@@ -22,7 +30,7 @@ document.addEventListener('alpine:init', () => {
         user: { ...this.data.currentUser },
       })
 
-      this.saveData(replyingToComment, id)
+      this.saveData(commentObj, id)
     },
 
     saveReplyToReply({ id, replyMessage, replyingTo, parrentCommentId }) {
@@ -48,10 +56,10 @@ document.addEventListener('alpine:init', () => {
       this.saveData(replyingToComment, id)
     },
 
-    saveData(replyingToComment, id) {
+    saveData(updatedComment, id) {
       this.data.comments = this.data.comments.map((comment) => {
         if (comment.id == id) {
-          return replyingToComment
+          return updatedComment
         }
 
         return comment
@@ -61,17 +69,28 @@ document.addEventListener('alpine:init', () => {
     },
 
     deleteComment(parrentId, id) {
+      let comments = []
       if (parrentId) {
         // delete reply
+        // find parent comment
+        comments = this.data.comments.map((comment) => {
+          if (comment.id == parrentId) {
+            // remove from replies
+            comment.replies = comment.replies.filter((reply) => reply.id != id)
+          }
 
-        const comment = this.data.comments.find(
-          (comment) => comment.id == parrentId
-        )
-        comment.replies = comment.replies.filter((reply) => reply.id != id)
-        console.log(comment, this.data)
+          return comment
+        })
       } else {
-        //delete
+        //delete comment
+        comments = this.data.comments.filter((comment) => comment.id != id)
       }
+
+      this.setComments = comments
+      this.saveToLs(this.data)
+
+      // reload page
+      location.reload()
     },
 
     saveToLs(data) {
