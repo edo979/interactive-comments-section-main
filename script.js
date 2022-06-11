@@ -1,23 +1,43 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('commentsApp', () => ({
-    data: {},
+    comments: [],
+    currentUser: {},
+    lastId: {},
 
-    set setData(data) {
-      this.data = data
+    async getData() {
+      // localStorage.clear()
+      // Get data from Local storage
+      const dataFromLs = JSON.parse(localStorage.getItem('commentsAppData'))
+
+      // Or load form file
+      if (!dataFromLs) {
+        const res = await fetch('data.json'),
+          dataFromFile = await res.json()
+
+        this.setData = { ...dataFromFile, lastId: 4 }
+      } else {
+        this.setData = dataFromLs
+      }
+    },
+
+    set setData({ comments, currentUser, lastId }) {
+      this.comments = comments
+      this.currentUser = currentUser
+      this.lastId = lastId
     },
 
     set setComments(comments) {
-      this.data.comments = comments
+      this.comments = comments
     },
 
     get getId() {
-      this.data.lastId++
-      return this.data.lastId
+      this.lastId++
+      return this.lastId
     },
 
     saveReply({ id, replyMessage, replyingTo }) {
       // Create reply object
-      const commentObj = this.data.comments
+      const commentObj = this.comments
         .filter((comment) => comment.id == id)
         .pop()
 
@@ -27,7 +47,7 @@ document.addEventListener('alpine:init', () => {
         createdAt: new Date().toString(),
         score: 0,
         replyingTo,
-        user: { ...this.data.currentUser },
+        user: { ...this.currentUser },
       })
 
       this.saveData(commentObj, id)
@@ -35,7 +55,7 @@ document.addEventListener('alpine:init', () => {
 
     saveReplyToReply({ id, replyMessage, replyingTo, parrentCommentId }) {
       // get parrent comment, create reply object, get index of replying reply
-      const replyingToComment = this.data.comments
+      const replyingToComment = this.comments
           .filter((comment) => comment.id == parrentCommentId)
           .pop(),
         newReply = {
@@ -44,7 +64,7 @@ document.addEventListener('alpine:init', () => {
           createdAt: new Date().toString(),
           score: 0,
           replyingTo,
-          user: { ...this.data.currentUser },
+          user: { ...this.currentUser },
         },
         indexOfParrentReply = replyingToComment.replies.findIndex(
           (el) => el.id == id
@@ -57,7 +77,7 @@ document.addEventListener('alpine:init', () => {
     },
 
     saveData(updatedComment, id) {
-      this.data.comments = this.data.comments.map((comment) => {
+      this.comments = this.comments.map((comment) => {
         if (comment.id == id) {
           return updatedComment
         }
@@ -65,7 +85,7 @@ document.addEventListener('alpine:init', () => {
         return comment
       })
 
-      this.saveToLs(this.data)
+      this.saveToLs()
     },
 
     deleteComment(parrentId, id) {
@@ -73,7 +93,7 @@ document.addEventListener('alpine:init', () => {
       if (parrentId) {
         // delete reply
         // find parent comment
-        comments = this.data.comments.map((comment) => {
+        comments = this.comments.map((comment) => {
           if (comment.id == parrentId) {
             // remove from replies
             comment.replies = comment.replies.filter((reply) => reply.id != id)
@@ -83,19 +103,23 @@ document.addEventListener('alpine:init', () => {
         })
       } else {
         //delete comment
-        comments = this.data.comments.filter((comment) => comment.id != id)
+        comments = this.comments.filter((comment) => comment.id != id)
       }
 
       this.setComments = comments
-      this.saveToLs(this.data)
+      this.saveToLs()
 
-      // reload page
+      // reload page force render
       location.reload()
     },
 
-    saveToLs(data) {
+    saveToLs() {
+      const data = {}
+      data.comments = this.comments
+      data.currentUser = this.currentUser
+      data.lastId = this.lastId
+
       localStorage.setItem('commentsAppData', JSON.stringify(data))
-      //console.log(JSON.parse(localStorage.getItem('commentsAppData')))
     },
 
     getCommentInnerHtml(isReply = false) {
@@ -174,7 +198,7 @@ document.addEventListener('alpine:init', () => {
       `
     },
 
-    isCurrentUser({ comment: { user }, data: { currentUser } }) {
+    isCurrentUser({ comment: { user }, currentUser }) {
       if (user.username === currentUser.username) {
         return true
       } else {
@@ -183,22 +207,6 @@ document.addEventListener('alpine:init', () => {
     },
   }))
 })
-
-async function getData() {
-  // localStorage.clear()
-  // Get data from Local storage
-  const dataFromLs = JSON.parse(localStorage.getItem('commentsAppData'))
-
-  // Or load form file
-  if (!dataFromLs) {
-    const res = await fetch('data.json'),
-      dataFromFile = await res.json()
-
-    return { ...dataFromFile, lastId: 4 }
-  }
-
-  return dataFromLs
-}
 
 function timeSince(dateStamp) {
   if (dateStamp.includes('ago')) {
