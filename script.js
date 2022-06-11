@@ -2,6 +2,11 @@ document.addEventListener('alpine:init', () => {
   Alpine.data('commentsApp', () => ({
     data: {},
 
+    get getId() {
+      this.data.lastId++
+      return this.data.lastId
+    },
+
     saveReply({ id, replyMessage, replyingTo }) {
       // Create reply object
       const replyingToComment = this.data.comments
@@ -55,14 +60,23 @@ document.addEventListener('alpine:init', () => {
       this.saveToLs(this.data)
     },
 
+    deleteComment(parrentId, id) {
+      if (parrentId) {
+        // delete reply
+
+        const comment = this.data.comments.find(
+          (comment) => comment.id == parrentId
+        )
+        comment.replies = comment.replies.filter((reply) => reply.id != id)
+        console.log(comment, this.data)
+      } else {
+        //delete
+      }
+    },
+
     saveToLs(data) {
       localStorage.setItem('commentsAppData', JSON.stringify(data))
       //console.log(JSON.parse(localStorage.getItem('commentsAppData')))
-    },
-
-    get getId() {
-      this.data.lastId++
-      return this.data.lastId
     },
 
     getCommentInnerHtml(isReply = false) {
@@ -115,7 +129,9 @@ document.addEventListener('alpine:init', () => {
           <div class="comment_ctrl-btns">
             <template x-if="isEdit">
               <div class="comment_edit flex">
-                <button>delete</button>
+                <button @click="deleteComment(parrentCommentId, id)">
+                  delete
+                </button>
                 <button>edit</button>
               </div>
             </template>
