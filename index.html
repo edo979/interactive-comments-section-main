@@ -42,7 +42,7 @@
             <li
               x-data="{
                 isReplyClick: false,
-                isEdit: isCurrentUser($data),
+                isCurrentUser: checkCurrentUser($data),
                 ...comment}"
             >
               <div
@@ -88,7 +88,8 @@
                     <li
                       x-data="{ 
                       isReplyClick: false,
-                      isEdit: isCurrentUser($data),
+                      isCurrentUser: checkCurrentUser($data),
+                      isEditClick: false,
                       ...comment}"
                     >
                       <div

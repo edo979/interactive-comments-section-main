@@ -149,7 +149,7 @@ document.addEventListener('alpine:init', () => {
             <p class="comment_username">
               <span x-text="user.username"></span>
               <span       
-                x-show="isEdit" 
+                x-show="isCurrentUser" 
                 class="comment_current-user">
                 You
               </span>
@@ -170,16 +170,19 @@ document.addEventListener('alpine:init', () => {
           </div>
 
           <div class="comment_ctrl-btns">
-            <template x-if="isEdit">
+            <template x-if="isCurrentUser">
               <div class="comment_edit flex">
                 <button @click="deleteComment(parrentCommentId, id)">
                   delete
                 </button>
-                <button>edit</button>
+                
+                <button @click="isEditClick = true">
+                  edit
+                </button>
               </div>
             </template>
 
-            <template x-if="!isEdit">
+            <template x-if="!isCurrentUser">
               <button
                 @click="isReplyClick = ! isReplyClick"
                 class="btn btn-secondary"
@@ -189,7 +192,7 @@ document.addEventListener('alpine:init', () => {
             </template> 
           </div>
 
-          <template x-if="isEdit">
+          <template x-if="isCurrentUser">
             <button class="comment_update-btn btn btn-primary"
             >
               Update
@@ -198,7 +201,7 @@ document.addEventListener('alpine:init', () => {
       `
     },
 
-    isCurrentUser({ comment: { user }, currentUser }) {
+    checkCurrentUser({ comment: { user }, currentUser }) {
       if (user.username === currentUser.username) {
         return true
       } else {
