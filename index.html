@@ -136,14 +136,21 @@
           </template>
         </ul>
 
-        <div class="attribution">
-          Challenge by
-          <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-            >Frontend Mentor</a
-          >. Coded by
-          <a href="https://www.frontendmentor.io/profile/edo979">edo979</a>.
+        <div x-show="isModalShow" class="modal">
+          <div class="modal_box">
+            <button @click="deleteComment()">Delete</button>
+            <button>Cancel</button>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by
+      <a href="https://www.frontendmentor.io/profile/edo979">edo979</a>.
     </div>
 
     <script src="script.js"></script>
