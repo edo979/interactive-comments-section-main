@@ -122,6 +122,22 @@ document.addEventListener('alpine:init', () => {
       localStorage.setItem('commentsAppData', JSON.stringify(data))
     },
 
+    updateComment({ content, id, parrentCommentId }) {
+      if (parrentCommentId) {
+        // update reply
+        const comment = this.comments.find(
+            (comment) => comment.id == parrentCommentId
+          ),
+          reply = comment.replies.find((reply) => reply.id == id)
+
+        reply.content = content
+
+        this.saveToLs()
+      } else {
+        // update comment
+      }
+    },
+
     getCommentInnerHtml(isReply = false) {
       let contentText = ''
 
@@ -202,7 +218,7 @@ document.addEventListener('alpine:init', () => {
           </div>
 
           <template x-if="isEditClick">
-            <button class="comment_update-btn btn btn-primary"
+            <button @click="updateComment($data)" class="comment_update-btn btn btn-primary"
             >
               Update
             </button>
