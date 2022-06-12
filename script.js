@@ -127,10 +127,19 @@ document.addEventListener('alpine:init', () => {
 
       if (isReply) {
         contentText = `
-          <p class="comment_content">
-            <span x-text="'@' + replyingTo + ' '"></span>
-            <span x-text="content"></span>
-          </p>
+          <template x-if="!isEditClick">
+            <p class="comment_content">
+              <span x-text="'@' + replyingTo + ' '"></span>
+              <span x-text="content"></span>
+            </p>
+          </template>
+
+          <template x-if="isEditClick">
+            <textarea
+              rows="3"
+              x-model="content"
+          ></textarea>
+          </template>
         `
       } else {
         contentText = `<p x-text="content" class="comment_content"></p>`
@@ -176,7 +185,7 @@ document.addEventListener('alpine:init', () => {
                   delete
                 </button>
                 
-                <button @click="isEditClick = true">
+                <button @click="isEditClick = ! isEditClick">
                   edit
                 </button>
               </div>
@@ -192,7 +201,7 @@ document.addEventListener('alpine:init', () => {
             </template> 
           </div>
 
-          <template x-if="isCurrentUser">
+          <template x-if="isEditClick">
             <button class="comment_update-btn btn btn-primary"
             >
               Update
