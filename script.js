@@ -4,6 +4,7 @@ document.addEventListener('alpine:init', () => {
     currentUser: {},
     lastId: {},
     isModalShow: false,
+    deleteCommentData: {},
 
     async getData() {
       // localStorage.clear()
@@ -89,42 +90,33 @@ document.addEventListener('alpine:init', () => {
       this.saveToLs()
     },
 
-    deleteCommentFunction: (parrentId, id) => {
-      return (self) => {
-        let comments = []
-        if (parrentId) {
-          // delete reply
-          // find parent comment
-          comments = self.comments.map((comment) => {
-            if (comment.id == parrentId) {
-              // remove from replies
-              comment.replies = comment.replies.filter(
-                (reply) => reply.id != id
-              )
-            }
-
-            return comment
-          })
-        } else {
-          //delete comment
-          comments = self.comments.filter((comment) => comment.id != id)
-        }
-
-        self.setComments = comments
-        self.saveToLs()
-
-        // reload page force render
-        location.reload()
-      }
-    },
-
-    commentForDelete(parrentCommentId, id) {
-      this.deleteCommentFunction(parrentCommentId, id)
-      this.isModalShow = true
-    },
-
     deleteComment() {
-      this.deleteCommentFunction(this)
+      const parrentId = this.deleteCommentData.parrentCommentId,
+        id = this.deleteCommentData.id
+
+      let comments = []
+
+      if (parrentId) {
+        // delete reply
+        // find parent comment
+        comments = this.comments.map((comment) => {
+          if (comment.id == parrentId) {
+            // remove from replies
+            comment.replies = comment.replies.filter((reply) => reply.id != id)
+          }
+
+          return comment
+        })
+      } else {
+        //delete comment
+        comments = this.comments.filter((comment) => comment.id != id)
+      }
+
+      this.setComments = comments
+      this.saveToLs()
+
+      // reload page force render
+      location.reload()
     },
 
     saveToLs() {
@@ -211,7 +203,9 @@ document.addEventListener('alpine:init', () => {
           <div class="comment_ctrl-btns">
             <template x-if="isCurrentUser">
               <div class="comment_edit flex">
-                <button @click="commentForDelete(parrentCommentId, id)">
+                <button @click="() => {
+                  deleteCommentData = {parrentCommentId, id};
+                  isModalShow = true}">
                   delete
                 </button>
                 
