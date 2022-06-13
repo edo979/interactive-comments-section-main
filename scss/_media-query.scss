@@ -38,5 +38,9 @@
     &_reply-btn {
       justify-self: end;
     }
+
+    &_reply-edit {
+      grid-column: span 2;
+    }
   }
 }

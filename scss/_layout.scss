@@ -74,4 +74,8 @@
     grid-area: update;
     justify-self: end;
   }
+
+  &_reply-edit {
+    grid-column: span 3;
+  }
 }

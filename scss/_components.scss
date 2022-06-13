@@ -60,19 +60,6 @@ body {
     img {
       width: 50px;
     }
-
-    textarea {
-      width: 100%;
-      padding: 0.5rem 1rem;
-      border: 1px solid $Dark-blue;
-      border-radius: $border-radius;
-      color: $Dark-blue;
-
-      &:active,
-      &:focus {
-        outline: none;
-      }
-    }
   }
 
   &_edit {
@@ -102,6 +89,19 @@ body {
   &_replies-container {
     padding-left: 15px;
     border-left: 2px solid $Light-gray;
+  }
+}
+
+.comment-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border: 1px solid $Dark-blue;
+  border-radius: $border-radius;
+  color: $Dark-blue;
+
+  &:active,
+  &:focus {
+    outline: none;
   }
 }
 

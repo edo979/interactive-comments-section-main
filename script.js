@@ -160,6 +160,7 @@ document.addEventListener('alpine:init', () => {
             <textarea
               rows="3"
               x-model="content"
+              class="comment_reply-edit comment-input"
           ></textarea>
           </template>
         `
