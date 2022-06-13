@@ -3,7 +3,19 @@
 }
 
 .comment {
+  border-radius: $border-radius;
   background-color: $White;
+
+  &_header {
+    img {
+      width: 32px;
+    }
+  }
+
+  &_username {
+    font-weight: 700;
+    color: $Dark-blue;
+  }
 
   &_score {
     justify-self: start;
