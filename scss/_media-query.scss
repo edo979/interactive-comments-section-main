@@ -15,6 +15,10 @@
   .comment {
     &_score {
       --direction: column;
+      --gap: 0.35rem;
+      padding-inline: 0.75rem;
+      align-self: start;
+      margin: 0;
     }
 
     &_reply-btn {

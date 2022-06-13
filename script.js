@@ -196,7 +196,7 @@ document.addEventListener('alpine:init', () => {
 
           <div class="flex comment_score">
             <button>+</button>
-            <span x-text="score" class="comment_score"></span>
+            <span x-text="score" class="comment_score-value"></span>
             <button>-</button>
           </div>
 
@@ -218,9 +218,10 @@ document.addEventListener('alpine:init', () => {
             <template x-if="!isCurrentUser">
               <button
                 @click="isReplyClick = ! isReplyClick"
-                class="btn btn-secondary"
+                class="btn btn-secondary flex"
+                style="--gap: 0.5rem;"
               >
-                Reply
+                <img src="images/icon-reply.svg" /> Reply
               </button>
             </template> 
           </div>

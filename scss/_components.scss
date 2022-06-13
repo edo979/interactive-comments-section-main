@@ -5,6 +5,31 @@
 .comment {
   background-color: $White;
 
+  &_score {
+    justify-self: start;
+    align-self: center;
+    padding: 0.4rem 0.9rem;
+    border-radius: $border-radius;
+    background-color: $Very-light-gray;
+
+    font-weight: 700;
+
+    > button {
+      margin: 0;
+      padding: 0;
+      border: 0;
+
+      font-size: 1.2rem;
+      color: $Light-grayish-blue;
+
+      background-color: transparent;
+    }
+
+    &-value {
+      color: $Moderate-blue;
+    }
+  }
+
   &_reply {
     --align: start;
     padding: $padding;
@@ -69,6 +94,13 @@
 
   &-primary {
     background-color: $Moderate-blue;
+  }
+
+  &-secondary {
+    background-color: transparent;
+    color: $Moderate-blue;
+    text-transform: capitalize;
+    font-weight: 700;
   }
 
   &-danger {
