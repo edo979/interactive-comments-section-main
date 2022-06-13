@@ -14,10 +14,7 @@
 
   .comment {
     --flow-gap: 0;
-
-    &_header {
-      margin-bottom: 1rem;
-    }
+    row-gap: 1rem;
 
     &_score {
       --direction: column;
@@ -28,6 +25,14 @@
 
     &_edit {
       --gap: 2rem;
+    }
+
+    &_ctrl-btns {
+      width: max-content;
+
+      .btn-secondary {
+        padding: 0;
+      }
     }
 
     &_reply-btn {
