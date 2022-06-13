@@ -18,9 +18,10 @@ body {
   }
 
   &_score {
+    --gap: 0.75rem;
     justify-self: start;
     align-self: center;
-    padding: 0.4rem 0.9rem;
+    padding: 0.4rem 0.8rem;
     border-radius: $border-radius;
     background-color: $Very-light-gray;
 
@@ -28,13 +29,20 @@ body {
 
     > button {
       margin: 0;
-      padding: 0;
+      padding: 0 0.25rem;
       border: 0;
 
       font-size: 1.2rem;
       color: $Light-grayish-blue;
 
       background-color: transparent;
+
+      cursor: pointer;
+
+      &:focus,
+      &:hover {
+        color: $Moderate-blue;
+      }
     }
 
     &-value {
@@ -75,14 +83,34 @@ body {
       font-size: var(--fs-400);
 
       background-color: transparent;
+
+      cursor: pointer;
     }
 
     &-delete {
       color: $Soft-Red;
+
+      &:focus,
+      &:hover {
+        color: $Pale-red;
+
+        svg path {
+          fill: $Pale-red;
+        }
+      }
     }
 
     &-edit {
       color: $Moderate-blue;
+
+      &:focus-visible,
+      &:hover {
+        color: $Light-grayish-blue;
+
+        svg path {
+          fill: $Light-grayish-blue;
+        }
+      }
     }
   }
 
@@ -152,6 +180,11 @@ body {
 
   &-primary {
     background-color: $Moderate-blue;
+
+    &:focus,
+    &:hover {
+      background-color: $Light-grayish-blue;
+    }
   }
 
   &-secondary {
@@ -161,14 +194,33 @@ body {
     text-transform: capitalize;
 
     background-color: transparent;
+
+    &:focus,
+    &:hover {
+      color: $Light-grayish-blue;
+
+      img {
+        opacity: 0.45;
+      }
+    }
   }
 
   &-danger {
     background-color: $Soft-Red;
+
+    &:focus,
+    &:hover {
+      background-color: $Pale-red;
+    }
   }
 
   &-neutral {
     background-color: $Grayish-Blue;
+
+    &:focus,
+    &:hover {
+      background-color: rgba($color: $Grayish-Blue, $alpha: 0.6);
+    }
   }
 
   &-danger,
