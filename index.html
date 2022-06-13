@@ -136,7 +136,7 @@
           </template>
         </ul>
 
-        <div x-show="isModalShow" class="modal">
+        <div x-show="isModalShow" x-cloak x-transition class="modal">
           <div class="modal_box flow">
             <h3>Delete comment</h3>
             <p>
@@ -144,7 +144,9 @@
               comment and can't be undone.
             </p>
             <div class="flex">
-              <button class="btn btn-neutral">No, cancel</button>
+              <button @click="isModalShow=false" class="btn btn-neutral">
+                No, cancel
+              </button>
               <button @click="deleteComment()" class="btn btn-danger">
                 Yes, delete
               </button>
