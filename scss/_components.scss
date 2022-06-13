@@ -21,3 +21,67 @@
     }
   }
 }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+
+  display: grid;
+  place-content: center;
+
+  background-color: rgba($color: black, $alpha: 0.5);
+
+  &_box {
+    --justify: space-between;
+    --gap: 1rem;
+    justify-self: center;
+    width: min(95%, 400px);
+    padding: min(2.15rem, 5vw);
+    border-radius: $border-radius;
+
+    background-color: white;
+
+    h3 {
+      font-size: var(--fs-600);
+      font-weight: 500;
+    }
+
+    .flex {
+      > * {
+        flex: 1;
+      }
+    }
+  }
+}
+
+.btn {
+  border: none;
+  border-radius: $border-radius;
+  padding: 0.75rem;
+
+  font-family: inherit;
+  font-weight: 500;
+  font-size: var(--fs-400);
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  &-primary {
+    background-color: $Moderate-blue;
+  }
+
+  &-danger {
+    background-color: $Soft-Red;
+  }
+
+  &-neutral {
+    background-color: $Grayish-Blue;
+  }
+
+  &-danger,
+  &-neutral,
+  &-primary {
+    color: $White;
+  }
+}

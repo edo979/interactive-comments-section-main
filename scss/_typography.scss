@@ -3,4 +3,23 @@
 html {
   font-family: 'Rubik', sans-serif;
   font-size: 16px;
+  color: $Grayish-Blue;
+}
+
+:root {
+  --fs-600: 1.5rem;
+  --fs-500: 1.05rem;
+  --fs-400: 1rem;
+  --fs-300: 0.9rem;
+}
+
+h1,
+h2,
+h3 {
+  color: $Dark-blue;
+}
+
+// Utility
+.text-dark {
+  color: $Dark-blue;
 }
