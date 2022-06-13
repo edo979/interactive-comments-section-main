@@ -72,6 +72,7 @@ body {
 
   &_edit {
     --gap: 1rem;
+
     > button {
       --gap: 0.4rem;
       border: none;
@@ -122,6 +123,7 @@ body {
 
 .comment-input {
   width: 100%;
+  min-height: 8rem;
   padding: 0.5rem 1rem;
   border: 1px solid $Dark-blue;
   border-radius: $border-radius;
