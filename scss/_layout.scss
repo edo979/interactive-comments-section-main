@@ -19,6 +19,7 @@
 }
 
 .main-container {
+  position: relative;
   width: 100%;
   min-height: 100vh;
 
@@ -67,10 +68,6 @@
   &_ctrl-btns {
     grid-area: reply;
     align-self: center;
-  }
-
-  &_replies-container {
-    padding-left: 25px;
   }
 
   &_update-btn {

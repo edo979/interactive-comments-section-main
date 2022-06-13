@@ -13,12 +13,21 @@
   }
 
   .comment {
+    --flow-gap: 0;
+
+    &_header {
+      margin-bottom: 1rem;
+    }
+
     &_score {
       --direction: column;
       --gap: 0.35rem;
       padding-inline: 0.75rem;
       align-self: start;
-      margin: 0;
+    }
+
+    &_edit {
+      --gap: 2rem;
     }
 
     &_reply-btn {

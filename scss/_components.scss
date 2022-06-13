@@ -1,4 +1,4 @@
-.main-container {
+body {
   background-color: $Very-light-gray;
 }
 
@@ -87,6 +87,11 @@
     &-edit {
       color: $Moderate-blue;
     }
+  }
+
+  &_replies-container {
+    padding-left: 15px;
+    border-left: 2px solid $Light-gray;
   }
 }
 
