@@ -42,6 +42,13 @@
     }
   }
 
+  &_content {
+    &-replying-to {
+      font-weight: 700;
+      color: $Moderate-blue;
+    }
+  }
+
   &_reply {
     --align: start;
     padding: $padding;
@@ -55,6 +62,30 @@
 
     textarea {
       width: 100%;
+    }
+  }
+
+  &_edit {
+    --gap: 1rem;
+    > button {
+      --gap: 0.4rem;
+      border: none;
+      margin: 0;
+      padding: 0;
+
+      text-transform: capitalize;
+      font-weight: 500;
+      font-size: var(--fs-400);
+
+      background-color: transparent;
+    }
+
+    &-delete {
+      color: $Soft-Red;
+    }
+
+    &-edit {
+      color: $Moderate-blue;
     }
   }
 }
@@ -128,4 +159,17 @@
   &-primary {
     color: $White;
   }
+}
+
+.badge {
+  padding: 1px 6px 3px;
+  border-radius: 2px;
+
+  font-size: var(--fs-200);
+  font-weight: 500;
+  line-height: 0;
+  color: $White;
+  text-transform: lowercase;
+
+  background-color: $Moderate-blue;
 }
