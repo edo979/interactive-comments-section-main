@@ -201,7 +201,7 @@ body {
   &-primary {
     background-color: $Moderate-blue;
 
-    &:focus,
+    &:focus-visible,
     &:hover {
       background-color: $Light-grayish-blue;
     }

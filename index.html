@@ -135,6 +135,7 @@
           </template>
         </ul>
 
+        <!-- Add new comment -->
         <div
           class="comment_new flex"
           x-data="{ ...currentUser, commentContent: '' }"
@@ -150,7 +151,13 @@
             x-model="commentContent"
           ></textarea>
 
-          <button @click="saveNewComment($data)" class="btn btn-primary">
+          <button
+            @click="() => {
+              saveNewComment($data);
+              commentContent = '';
+            }"
+            class="btn btn-primary"
+          >
             Send
           </button>
         </div>
