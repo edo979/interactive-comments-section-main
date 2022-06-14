@@ -145,13 +145,34 @@ document.addEventListener('alpine:init', () => {
     },
 
     changeScore(value, { id, parrentCommentId }) {
+      // mutate comment value
+      function setScore(value, comment) {
+        if (value == '+') {
+          comment.score = comment.score + 1
+        } else {
+          comment.score = comment.score - 1
+        }
+      }
+
       if (parrentCommentId) {
         // change score for reply
-        console.log('score for coment', value, parrentCommentId, id)
+        const comment = this.comments.find(
+            (comment) => comment.id == parrentCommentId
+          ),
+          reply = comment.replies.find((reply) => reply.id == id)
+
+        setScore(value, reply)
+
+        this.saveData(comment, parrentCommentId)
       } else {
         // change score for commment
-        console.log('score for coment', value, id)
+        const comment = this.comments.find((comment) => comment.id == id)
+
+        setScore(value, comment)
+        this.saveData(comment, id)
       }
+
+      location.reload()
     },
 
     getCommentInnerHtml(isReply = false) {
