@@ -43,6 +43,15 @@ body {
       &:hover {
         color: $Moderate-blue;
       }
+
+      &:disabled {
+        &:hover,
+        &:focus {
+          color: $Light-grayish-blue;
+
+          cursor: auto;
+        }
+      }
     }
 
     &-value {

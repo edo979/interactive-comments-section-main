@@ -52,7 +52,7 @@ document.addEventListener('alpine:init', () => {
         user: { ...this.currentUser },
       })
 
-      this.saveData(commentObj, id)
+      this.saveCommentsData(commentObj, id)
     },
 
     saveReplyToReply({ id, replyMessage, replyingTo, parrentCommentId }) {
@@ -75,10 +75,10 @@ document.addEventListener('alpine:init', () => {
       // post reply after reply
       replyingToComment.replies.splice(indexOfParrentReply + 1, 0, newReply)
 
-      this.saveData(replyingToComment, id)
+      this.saveCommentsData(replyingToComment, id)
     },
 
-    saveData(updatedComment, id) {
+    saveCommentsData(updatedComment, id) {
       this.comments = this.comments.map((comment) => {
         if (comment.id == id) {
           return updatedComment
@@ -163,16 +163,47 @@ document.addEventListener('alpine:init', () => {
 
         setScore(value, reply)
 
-        this.saveData(comment, parrentCommentId)
+        this.saveCurrentUserScoredComments(id)
+        this.saveCommentsData(comment, parrentCommentId)
       } else {
         // change score for commment
         const comment = this.comments.find((comment) => comment.id == id)
 
         setScore(value, comment)
-        this.saveData(comment, id)
+
+        this.saveCurrentUserScoredComments(id)
+        this.saveCommentsData(comment, id)
       }
 
       location.reload()
+    },
+
+    saveCurrentUserScoredComments(id) {
+      // if user not scored comments before
+      // create array for scored comments
+      if (!this.isScoringDataSet()) {
+        this.currentUser.scoredComments = []
+      }
+
+      this.currentUser.scoredComments.push(id)
+
+      console.log(this.currentUser)
+    },
+
+    isScoringDataSet() {
+      if (this.currentUser.scoredComments) {
+        return true
+      } else {
+        return false
+      }
+    },
+
+    isScoredComment(id) {
+      if (this.isScoringDataSet()) {
+        return this.currentUser.scoredComments.includes(id)
+      } else {
+        return false
+      }
     },
 
     getCommentInnerHtml(isReply = false) {
@@ -227,9 +258,12 @@ document.addEventListener('alpine:init', () => {
           ${contentText}
 
           <div class="flex comment_score">
-            <button @click="changeScore('+', $data)">+</button>
+            <button @click="changeScore('+', $data)"
+            :disabled="isScoredComment(id) || checkCurrentUser($data)">+</button>
+
             <span x-text="score" class="comment_score-value"></span>
-            <button @click="changeScore('-', $data)">-</button>
+
+            <button @click="changeScore('-', $data)" :disabled="isScoredComment(id) || checkCurrentUser($data)">-</button>
           </div>
 
           <div class="comment_ctrl-btns">
