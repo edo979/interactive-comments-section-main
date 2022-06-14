@@ -144,6 +144,16 @@ document.addEventListener('alpine:init', () => {
       }
     },
 
+    changeScore(value, { id, parrentCommentId }) {
+      if (parrentCommentId) {
+        // change score for reply
+        console.log('score for coment', value, parrentCommentId, id)
+      } else {
+        // change score for commment
+        console.log('score for coment', value, id)
+      }
+    },
+
     getCommentInnerHtml(isReply = false) {
       let contentText = ''
 
@@ -196,9 +206,9 @@ document.addEventListener('alpine:init', () => {
           ${contentText}
 
           <div class="flex comment_score">
-            <button>+</button>
+            <button @click="changeScore('+', $data)">+</button>
             <span x-text="score" class="comment_score-value"></span>
-            <button>-</button>
+            <button @click="changeScore('-', $data)">-</button>
           </div>
 
           <div class="comment_ctrl-btns">
