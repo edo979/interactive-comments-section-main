@@ -1,6 +1,6 @@
 @media (min-width: 568px) {
   .comments {
-    width: min(800px, 90vw);
+    width: min(730px, 90vw);
   }
 
   .grid-container {
@@ -41,6 +41,10 @@
 
     &_reply-edit {
       grid-column: span 2;
+    }
+
+    &_replies-container {
+      margin-left: min(2.75rem, 5vw);
     }
   }
 }

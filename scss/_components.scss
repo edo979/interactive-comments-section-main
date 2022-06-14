@@ -134,7 +134,7 @@ body {
   }
 
   &_replies-container {
-    padding-left: 15px;
+    padding-left: min(2.75rem, 4.25vw);
     border-left: 2px solid $Light-gray;
   }
 }
