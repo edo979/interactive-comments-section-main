@@ -29,12 +29,28 @@ document.addEventListener('alpine:init', () => {
     },
 
     set setComments(comments) {
-      this.comments = comments
+      this.comments = [...comments]
     },
 
     get getId() {
       this.lastId++
       return this.lastId
+    },
+
+    saveNewComment({ commentContent, currentUser }) {
+      if (commentContent) {
+        const comment = {
+          id: this.getId,
+          content: commentContent,
+          createdAt: new Date().toString(),
+          score: 0,
+          user: { ...currentUser },
+          replies: [],
+        }
+
+        this.comments = this.comments.concat(comment)
+        this.saveToLs()
+      }
     },
 
     saveReply({ id, replyMessage, replyingTo }) {
@@ -137,11 +153,12 @@ document.addEventListener('alpine:init', () => {
           reply = comment.replies.find((reply) => reply.id == id)
 
         reply.content = content
-
-        this.saveToLs()
       } else {
         // update comment
+        this.comments.find((comment) => comment.id == id).content = content
       }
+
+      this.saveToLs()
     },
 
     changeScore(value, { id, parrentCommentId }) {
@@ -227,7 +244,19 @@ document.addEventListener('alpine:init', () => {
           </template>
         `
       } else {
-        contentText = `<p x-text="content" class="comment_content"></p>`
+        contentText = `
+          <template x-if="!isEditClick">
+            <p x-text="content" class="comment_content"></p>
+          </template>
+
+          <template x-if="isEditClick">
+            <textarea
+              rows="3"
+              x-model="content"
+              class="comment_reply-edit comment-input"
+            ></textarea>
+          </template>
+        `
       }
 
       return `
@@ -295,7 +324,10 @@ document.addEventListener('alpine:init', () => {
           </div>
 
           <template x-if="isEditClick">
-            <button @click="updateComment($data)" class="comment_update-btn btn btn-primary"
+            <button @click="() => {
+              updateComment($data);
+              isEditClick = false;
+              }" class="comment_update-btn btn btn-primary"
             >
               Update
             </button>

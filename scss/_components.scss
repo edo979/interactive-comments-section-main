@@ -66,7 +66,8 @@ body {
     }
   }
 
-  &_reply {
+  &_reply,
+  &_new {
     --align: start;
     padding: $padding;
     margin: 0.5rem 0 1rem;
@@ -76,6 +77,14 @@ body {
 
     img {
       width: 50px;
+    }
+  }
+
+  &_new {
+    margin: 1rem 0 0;
+
+    textarea {
+      min-height: 40px;
     }
   }
 

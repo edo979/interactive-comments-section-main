@@ -135,6 +135,26 @@
           </template>
         </ul>
 
+        <div
+          class="comment_new flex"
+          x-data="{ ...currentUser, commentContent: '' }"
+        >
+          <picture>
+            <source :srcset="image.webp" media="(min-width: 400px)" />
+            <img :src="image.png" alt="" />
+          </picture>
+
+          <textarea
+            class="comment-input"
+            rows="4"
+            x-model="commentContent"
+          ></textarea>
+
+          <button @click="saveNewComment($data)" class="btn btn-primary">
+            Send
+          </button>
+        </div>
+
         <div x-show="isModalShow" x-cloak x-transition class="modal">
           <div class="modal_box flow">
             <h3>Delete comment</h3>
